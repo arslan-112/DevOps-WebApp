@@ -1,0 +1,11 @@
+.yellowbar {
+    width: 100%;
+    height: 40px; /* Set this to your preferred height */
+    overflow: hidden; /* Ensures no overflow from the image */
+}
+
+.topbar {
+    width: 1400px;
+    height: 40px;
+    object-fit: cover;
+} */

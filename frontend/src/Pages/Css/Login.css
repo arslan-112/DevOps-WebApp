@@ -1,0 +1,82 @@
+.LoginSignup {
+  width: 100%;
+  height: 100vh; /* Adjust to take up the full height of the viewport */
+  background: #fce3fe;
+  display: flex; /* Center the form */
+  justify-content: center;
+  align-items: center;
+  padding-top: 0; /* Remove padding to avoid offset */
+}
+
+.login-signup-container {
+  width: 100%; /* Make it responsive */
+  max-width: 580px; /* Limit the width */
+  height: auto; /* Let the height adjust based on content */
+  background: white;
+  margin: 0 auto;
+  padding: 40px 60px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1); /* Add a subtle shadow for better visuals */
+  border-radius: 10px; /* Add rounded corners */
+}
+
+.login-signup-container h1 {
+  margin: 20px 0px;
+  text-align: center; /* Center the heading */
+  font-size: 32px; /* Increase font size for better visibility */
+  color: #333;
+}
+
+.login-signup-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Reduce the gap for better alignment */
+  margin-top: 30px;
+}
+
+.login-signup-fields input {
+  height: 50px; /* Adjust height for better proportions */
+  width: 100%;
+  padding-left: 15px; /* Reduce padding for better alignment */
+  border: 1px solid #c9c9c9;
+  outline: none;
+  color: #5c5c5c;
+  font-size: 16px; /* Reduce font size slightly */
+  border-radius: 5px; /* Add rounded corners */
+  transition: border-color 0.3s ease;
+}
+
+.login-signup-fields input:focus {
+  border-color: #162ba1; /* Highlight border on focus */
+}
+
+.login-signup-container button {
+  width: 100%; /* Adjust width to match the form */
+  height: 50px; /* Reduce height */
+  color: white;
+  background: #162ba1;
+  margin-top: 30px;
+  border: none;
+  font-size: 18px; /* Reduce font size */
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 5px; /* Add rounded corners */
+  transition: background-color 0.3s ease;
+}
+
+.login-signup-container button:hover {
+  background: #3e12a4; /* Add hover effect */
+}
+
+.login-signup-container p {
+  margin-top: 20px;
+  color: #5c5c5c;
+  font-size: 16px; /* Reduce font size */
+  font-weight: 500;
+  text-align: center; /* Center the text */
+}
+
+.login-signup-container p span {
+  color: #162ba1;
+  cursor: pointer;
+  text-decoration: underline;
+}

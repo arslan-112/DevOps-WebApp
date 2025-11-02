@@ -1,0 +1,57 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.center {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.overlay {
+  position: relative;
+  width: 100%;
+}
+
+.imga {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.text-overlay {
+  position: absolute;
+  top: 40%;
+  left: 40px;
+  transform: translateY(-50%);
+  text-align: left;
+  color: white;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+  font-family: "Arial", sans-serif;
+}
+
+.text-overlay h1 {
+  font-size: 30px;
+  margin: 0;
+}
+
+.text-overlay p {
+  font-size: 15px;
+  margin: 0.5rem 0 0;
+}
+.text-overlay button {
+  color: black;
+  width: 120px;
+  height: 50px;
+  border-radius: 18px;
+  font-size: 16px;
+  border: none;
+  font-weight: bolder;
+  cursor: pointer;
+  background-color: #ffde3f;
+  margin-top: 20px;
+}
