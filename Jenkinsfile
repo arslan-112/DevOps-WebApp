@@ -8,11 +8,12 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                
                 git branch: 'main', 
+                credentialsId: 'github-ssh', 
                 url: 'git@github.com:arslan-112/DevOps-WebApp.git'
             }
-        }
+}
+
 
         stage('Build & Run Containers') {
             steps {
