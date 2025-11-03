@@ -59,7 +59,7 @@ EOF
 
     post {
         always {
-            echo 'Build complete.'
+            echo 'Build complete!'
         }
     }
 }
