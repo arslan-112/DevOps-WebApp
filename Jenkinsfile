@@ -8,8 +8,9 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main',
-                    url: 'https://github.com/arslan-112/DevOps-WebApp.git'
+                
+                git branch: 'main', 
+                url: 'git@github.com:arslan-112/DevOps-WebApp.git'
             }
         }
 
