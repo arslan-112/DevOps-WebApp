@@ -12,7 +12,7 @@ services:
     container_name: mern-backend2
     working_dir: /app
     volumes:
-      - ./backend:/app
+      - ./Backend:/app
     command: bash -c "npm install && npm start"
     environment:
       - MONGO_URI=mongodb://mongo2:27017/mern_db
