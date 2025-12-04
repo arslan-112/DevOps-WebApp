@@ -33,15 +33,15 @@ services:
     depends_on:
       - backend2
 
-    test-runner:
-      build:
-        context: .
-        dockerfile: tests/Dockerfile
-      depends_on:
-        - frontend2
-      environment:
-        BASE_URL: http://frontend2:5173 # ← internal Docker DNS
-      shm_size: "2gb"
+  test-runner:
+    build:
+      context: .
+      dockerfile: tests/Dockerfile
+    depends_on:
+      - frontend2
+    environment:
+      BASE_URL: http://frontend2:5173
+    shm_size: "2gb"
 
 volumes:
   mongo_data_part2:
