@@ -24,7 +24,7 @@ def browser():
     chrome_options.add_argument("--disable-setuid-sandbox")
     chrome_options.add_argument("--remote-debugging-port=9222") 
 
-    service = Service()
+    service = Service("/usr/local/bin/chromedriver")
     driver = webdriver.Chrome(service=service, options=chrome_options)
     yield driver
     driver.quit()
