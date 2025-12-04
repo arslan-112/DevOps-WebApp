@@ -40,6 +40,15 @@ EOF
 
                 docker compose -f docker-compose2.yml down || true
                 docker compose -f docker-compose2.yml up -d --build
+                sleep 10
+                '''
+            }
+        }
+        stage('Run Selenium Tests') {
+            steps {
+                sh '''
+                # Run test container (it will exit after tests)
+                docker compose -f docker-compose2.yml run --rm test-runner
                 '''
             }
         }
