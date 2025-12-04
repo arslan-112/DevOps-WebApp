@@ -1,4 +1,3 @@
-
 pipeline {
     agent any
 
@@ -41,14 +40,14 @@ EOF
 
                 docker compose -f docker-compose2.yml down || true
                 docker compose -f docker-compose2.yml up -d --build
-                sleep 10
+                sleep 20
                 '''
             }
         }
         stage('Run Selenium Tests') {
             steps {
                 sh '''
-                # Run test container (it will exit after tests)
+                # Run test container 
                 docker compose -f docker-compose2.yml run --rm test-runner
                 '''
             }
@@ -69,7 +68,28 @@ EOF
 
     post {
         always {
-            echo 'Build complete!'
+            script {
+                
+                echo 'Pipeline completed.'
+            }
+        }
+        success {
+            script {
+                emailext (
+                    subject: "Assignment-3 Tests PASSED: ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
+                    body: "All 10 Selenium tests passed.\nBuild URL: ${env.BUILD_URL}",
+                    recipientProviders: [[$class: 'CulpritsRecipientProvider']]
+                )
+            }
+        }
+        failure {
+            script {
+                emailext (
+                    subject: "Assignment-3 Tests FAILED: ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
+                    body: "One or more tests failed.\nBuild URL: ${env.BUILD_URL}",
+                    recipientProviders: [[$class: 'CulpritsRecipientProvider']]
+                )
+            }
         }
     }
 }
