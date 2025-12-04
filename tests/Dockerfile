@@ -1,35 +1,41 @@
 FROM python:3.11-slim
 
-# Install dependencies
+# Prevent Chrome sandbox issues on EC2 / Docker
+ENV CHROME_BIN=/usr/bin/google-chrome
+ENV CHROMEDRIVER_AUTOINSTALL=1
+
+# Install Chrome + required libs
 RUN apt-get update && apt-get install -y \
-    wget unzip gnupg curl \
-    libnss3 libgconf-2-4 libasound2 \
-    fonts-liberation xdg-utils libu2f-udev \
-    libatk1.0-0 libatk-bridge2.0-0 libgbm1 \
-    libx11-6 libxcomposite1 libxcursor1 libxdamage1 \
-    libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 \
-    libdrm2 libxshmfence1 libxss1 libxtst6 \
+    wget gnupg unzip curl \
+    libnss3 libasound2 fonts-liberation \
+    xdg-utils libu2f-udev libgbm1 \
+    libx11-6 libxcomposite1 libxcursor1 \
+    libxdamage1 libxext6 libxfixes3 libxi6 \
+    libxrandr2 libxrender1 libdrm2 libxshmfence1 \
+    libxss1 libxtst6 \
     --no-install-recommends && \
     rm -rf /var/lib/apt/lists/*
 
-# Install Google Chrome
-RUN wget -q -O chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
-    apt-get update && apt-get install -y ./chrome.deb && rm chrome.deb
+# Add Google’s Chrome repo
+RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | \
+    gpg --dearmor -o /usr/share/keyrings/google-linux.gpg
 
-RUN CHROME_VERSION=$(google-chrome --version | awk '{print $3}') && \
-    DRIVER_VERSION=$(wget -qO- https://googlechromelabs.github.io/chrome-for-testing/LATEST_RELEASE_${CHROME_VERSION%.*}) && \
-    wget -q https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/$DRIVER_VERSION/linux64/chromedriver-linux64.zip && \
-    unzip chromedriver-linux64.zip && \
-    mv chromedriver-linux64/chromedriver /usr/local/bin/chromedriver && \
-    chmod +x /usr/local/bin/chromedriver && \
-    rm -rf chromedriver-linux64*
+RUN echo "deb [arch=amd64 signed-by=/usr/share/keyrings/google-linux.gpg] \
+    http://dl.google.com/linux/chrome/deb stable main" \
+    > /etc/apt/sources.list.d/google-chrome.list
 
+RUN apt-get update && apt-get install -y google-chrome-stable && \
+    rm -rf /var/lib/apt/lists/*
 
-# Python dependencies
+# Install dependencies
 WORKDIR /app
 COPY tests/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Install webdriver-manager to auto-match Chrome + Driver
+RUN pip install webdriver-manager
+
+# Copy tests
 COPY tests/ /app/
 
 CMD ["python", "-m", "pytest", "testing.py", "-v"]

@@ -7,6 +7,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 import time
+from webdriver_manager.chrome import ChromeDriverManager
 import os
 BASE_URL = os.getenv("BASE_URL", "http://3.111.81.89:3001")
 EMAIL = "arslan@gmail.com"
@@ -24,7 +25,7 @@ def browser():
     chrome_options.add_argument("--disable-setuid-sandbox")
     chrome_options.add_argument("--remote-debugging-port=9222") 
 
-    service = Service("/usr/local/bin/chromedriver")
+    service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service, options=chrome_options)
     yield driver
     driver.quit()
