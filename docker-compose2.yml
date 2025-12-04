@@ -34,14 +34,16 @@ services:
       - backend2
 
   test-runner:
-    build:
-      context: .
-      dockerfile: tests/Dockerfile
+    image: markhobson/maven-chrome:latest
     depends_on:
       - frontend2
+    working_dir: /usr/src/app
+    volumes:
+      - ./tests:/usr/src/app
     environment:
-      BASE_URL: http://frontend2:5173
+      BASE_URL: http://frontend2:3001
     shm_size: "2gb"
+    command: mvn test
 
 volumes:
   mongo_data_part2:
