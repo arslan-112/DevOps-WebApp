@@ -6,6 +6,8 @@ services:
       - "27018:27017"
     volumes:
       - mongo_data_part2:/data/db
+    networks:
+      - ci-network
 
   backend2:
     image: node:18
@@ -20,6 +22,8 @@ services:
       - mongo2
     ports:
       - "5001:5000"
+    networks:
+      - ci-network
 
   frontend2:
     image: node:18
@@ -32,6 +36,8 @@ services:
       - "3001:5173"
     depends_on:
       - backend2
+    networks:
+      - ci-network
 
   test-runner:
     image: markhobson/maven-chrome:latest
@@ -41,9 +47,15 @@ services:
     volumes:
       - ./tests:/usr/src/app
     environment:
-      BASE_URL: http://frontend2:3001
+      BASE_URL: http://frontend2:5173
     shm_size: "2gb"
     command: mvn test
+    networks:
+      - ci-network
+
+networks:
+  ci-network:
+    driver: bridge
 
 volumes:
   mongo_data_part2:

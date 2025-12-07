@@ -39,8 +39,8 @@ EOF
                 sudo chmod -R 777 .
 
                 docker compose -f docker-compose2.yml down || true
-                docker compose -f docker-compose2.yml up -d --build
-                sleep 20
+                docker compose -f docker-compose2.yml up -d --build mongo2 backend2 frontend2
+                sleep 25
                 '''
             }
         }
