@@ -49,7 +49,6 @@ EOF
                 '''
             }
         }
-
         stage('Build Test Image') {
             steps {
                 sh '''
