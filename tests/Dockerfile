@@ -21,7 +21,7 @@ RUN CHROME_DRIVER_VERSION="126.0.6478.126" \
     && rm /tmp/chromedriver.zip \
     && ln -sf /opt/chromedriver-linux64/chromedriver /usr/bin/chromedriver
 
-# Disable sandbox
+# Disable sandboxx
 RUN sed -i 's/"$HERE\/chrome"/"$HERE\/chrome" --no-sandbox/g' /opt/google/chrome/google-chrome
 
 WORKDIR /usr/src/app
