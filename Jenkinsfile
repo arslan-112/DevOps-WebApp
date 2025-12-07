@@ -95,7 +95,8 @@ EOF
             emailext (
                 subject: "Tests PASSED: ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
                 body: "All tests passed.\nBuild: ${env.BUILD_URL}",
-                to: "ijazarslan372@gmail.com,qasimalik@gmail.com"
+                to: "ijazarslan372@gmail.com,qasimalik@gmail.com",
+                recipientProviders: [[$class: 'DevelopersRecipientProvider']]
             )
         }
     }
