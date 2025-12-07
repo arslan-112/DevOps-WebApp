@@ -90,29 +90,23 @@ EOF
     }
 
     post {
-        always {
-            script {
-                
-                echo 'Pipeline completed.'
-            }
-        }
-        success {
-            script {
-                emailext (
-                    subject: "Assignment-3 Tests PASSED: ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
-                    body: "All 10 Selenium tests passed.\nBuild URL: ${env.BUILD_URL}",
-                    recipientProviders: [[$class: 'CulpritsRecipientProvider']]
-                )
-            }
-        }
-        failure {
-            script {
-                emailext (
-                    subject: "Assignment-3 Tests FAILED: ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
-                    body: "One or more tests failed.\nBuild URL: ${env.BUILD_URL}",
-                    recipientProviders: [[$class: 'CulpritsRecipientProvider']]
-                )
-            }
+    success {
+        script {
+            emailext (
+                subject: "Tests PASSED: ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
+                body: "All tests passed.\nBuild: ${env.BUILD_URL}",
+                to: "ijazarslan372@gmail.com,qasimalik@gmail.com"
+            )
         }
     }
+    failure {
+        script {
+            emailext (
+                subject: "Tests FAILED: ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
+                body: "Tests failed.\nBuild: ${env.BUILD_URL}",
+                to: "ijazarslan372@gmail.com,qasimalik@gmail.com"
+            )
+        }
+    }
+}
 }
