@@ -33,11 +33,17 @@ EOF
         }
 
         stage('Build & Run Containers') {
+            environment {
+            MONGO_URI = credentials('MONGO_ATLAS_URI')
+        }
             steps {
                 sh '''
                 sudo chown -R jenkins:jenkins .
                 sudo chmod -R 777 .
-
+                mkdir -p Backend
+                cat > Backend/.env <<EOF
+MONGO_URI=$MONGO_URI
+EOF
                 docker compose -f docker-compose2.yml down || true
                 docker compose -f docker-compose2.yml up -d --build 
                 sleep 25
