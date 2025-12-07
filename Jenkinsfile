@@ -34,6 +34,7 @@ EOF
         stage('Build & Run Containers') {
             environment {
             MONGO_URI = credentials('MONGO_ATLAS_URI')
+            JWT_KEY     = credentials('JWT_SECRET')
         }
             steps {
                 sh '''
@@ -42,6 +43,7 @@ EOF
                 mkdir -p Backend
                 cat > Backend/.env <<EOF
 MONGO_URI=$MONGO_URI
+JWT_SECRET=$JWT_KEY
 EOF
                 docker compose -f docker-compose2.yml down || true
                 docker compose -f docker-compose2.yml up -d --build 
