@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         EC2_PUBLIC_IP = '3.111.81.89'  
+        DOCKER_NETWORK = 'second_ci-network'
     }
 
     stages {
@@ -39,16 +40,35 @@ EOF
                 sudo chmod -R 777 .
 
                 docker compose -f docker-compose2.yml down || true
-                docker compose -f docker-compose2.yml up -d --build mongo2 backend2 frontend2
+                docker compose -f docker-compose2.yml up -d --build 
                 sleep 25
                 '''
             }
         }
+
+        stage('Build Test Image') {
+            steps {
+                sh '''
+                # Build your custom test image
+                docker build -f tests/Dockerfile -t elite-toys-tests .
+                '''
+            }
+        }
+
         stage('Run Selenium Tests') {
             steps {
                 sh '''
-                # Run test container 
-                docker compose -f docker-compose2.yml run --rm test-runner
+                # Get the actual Docker network name (compose project name + _ci-network)
+                NETWORK=$(docker network ls --filter name=ci-network --format "{{.Name}}" | head -n1)
+
+                # Run test container on same network
+                docker run --rm \
+                  --network="$NETWORK" \
+                  -v "$PWD/tests:/usr/src/app" \
+                  -e BASE_URL="http://mern-frontend2:5173" \
+                  --shm-size="2gb" \
+                  elite-toys-tests \
+                  mvn test -Dtest=EliteToysTests
                 '''
             }
         }
@@ -60,7 +80,6 @@ EOF
                 echo "Frontend .env:"
                 cat frontend/.env
                 echo "Backend logs:"
-                docker logs mern-backend2 || true
                 '''
             }
         }

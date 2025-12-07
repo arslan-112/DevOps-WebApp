@@ -1,7 +1,7 @@
 services:
   mongo2:
     image: mongo:6
-    container_name: mongo2
+    # container_name: mongo2
     ports:
       - "27018:27017"
     volumes:
@@ -11,7 +11,7 @@ services:
 
   backend2:
     image: node:18
-    container_name: mern-backend2
+    # container_name: mern-backend2
     working_dir: /app
     volumes:
       - ./Backend:/app
@@ -27,7 +27,7 @@ services:
 
   frontend2:
     image: node:18
-    container_name: mern-frontend2
+    # container_name: mern-frontend2
     working_dir: /usr/src/app
     volumes:
       - ./frontend:/usr/src/app
