@@ -48,28 +48,28 @@ EOF
         stage('Build Test Image') {
             steps {
                 sh '''
-                # Build your custom test image
-                docker build -f tests/Dockerfile -t elite-toys-tests .
+                
+                docker build -f tests/Dockerfile -t elite-toys-tests tests/
                 '''
             }
         }
 
         stage('Run Selenium Tests') {
             steps {
-                sh '''
-                # Get the actual Docker network name (compose project name + _ci-network)
-                NETWORK=$(docker network ls --filter name=ci-network --format "{{.Name}}" | head -n1)
+            sh '''
+            # Get Docker network name
+            NETWORK=$(docker network ls --filter name=ci-network --format "{{.Name}}" | head -n1)
 
-                # Run test container on same network
-                docker run --rm \
-                  --network="$NETWORK" \
-                  -v "$PWD/tests:/usr/src/app" \
-                  -e BASE_URL="http://mern-frontend2:5173" \
-                  --shm-size="2gb" \
-                  elite-toys-tests \
-                  mvn test -Dtest=EliteToysTests
-                '''
-            }
+            # Run Python test container
+            docker run --rm \
+            --network="$NETWORK" \
+            -v "$PWD/tests:/app" \
+            -e BASE_URL="http://frontend2:5173" \
+            --shm-size="2gb" \
+            elite-toys-tests \
+            python selenium_tests.py
+            '''
+        }
         }
 
         stage('Verify Services') {
