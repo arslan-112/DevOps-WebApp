@@ -25,13 +25,17 @@ public class EliteToysTests {
         ChromeOptions options = new ChromeOptions();
 
         options.addArguments(
-                "--headless",
-                "--no-sandbox",
-                "--disable-dev-shm-usage",
-                "--disable-gpu",
-                "--window-size=1920,1080",
-                "--disable-extensions",
-                "--disable-setuid-sandbox"
+        "--headless=new",            
+        "--no-sandbox",
+        "--disable-dev-shm-usage",
+        "--disable-gpu",
+        "--window-size=1920,1080",
+        "--disable-extensions",
+        "--disable-setuid-sandbox",
+        "--remote-debugging-port=9222", 
+        "--disable-dev-tools",          
+        "--disable-web-security",
+        "--allow-running-insecure-content"
         );
 
         driver = new ChromeDriver(options);
