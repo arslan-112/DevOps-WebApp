@@ -29,4 +29,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 
-CMD ["python", "selenium_tests.py"]
+CMD ["pytest", "selenium_tests.py", "-v"]

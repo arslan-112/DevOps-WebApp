@@ -67,7 +67,7 @@ EOF
             -e BASE_URL="http://frontend2:5173" \
             --shm-size="2gb" \
             elite-toys-tests \
-            python selenium_tests.py
+            pytest selenium_tests.py -v
             '''
         }
         }
