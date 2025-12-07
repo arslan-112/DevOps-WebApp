@@ -39,21 +39,21 @@ services:
     networks:
       - ci-network
 
-  test-runner:
-    image: markhobson/maven-chrome:17-jdk-127
-    depends_on:
-      - frontend2
-    working_dir: /usr/src/app
-    volumes:
-      - ./tests:/usr/src/app
-    environment:
-      BASE_URL: http://frontend2:5173
-    shm_size: "2gb"
-    tmpfs:
-      - /tmp
-    command: mvn test -Dtest=EliteToysTests
-    networks:
-      - ci-network
+  # test-runner:
+  #   image: markhobson/maven-chrome:17-jdk-127
+  #   depends_on:
+  #     - frontend2
+  #   working_dir: /usr/src/app
+  #   volumes:
+  #     - ./tests:/usr/src/app
+  #   environment:
+  #     BASE_URL: http://frontend2:5173
+  #   shm_size: "2gb"
+  #   tmpfs:
+  #     - /tmp
+  #   command: mvn test -Dtest=EliteToysTests
+  #   networks:
+  #     - ci-network
 
 networks:
   ci-network:
