@@ -1,27 +1,25 @@
-# tests/Dockerfile
-FROM maven:3.9.10-eclipse-temurin-17
+FROM maven:3.9.10-eclipse-temurin-21
 
-# Install dependencies
-RUN apt-get update -qqy \
-    && apt-get -qqy install gpg unzip wget ca-certificates \
-    && rm -rf /var/lib/apt/lists/*
+# Google Chrome
 
-# Install Chrome
 ARG CHROME_VERSION=138.0.7204.183-1
-RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
-    && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list \
-    && apt-get update -qqy \
-    && apt-get -qqy install google-chrome-stable=$CHROME_VERSION \
-    && rm /etc/apt/sources.list.d/google-chrome.list \
-    && rm -rf /var/lib/apt/lists/* /var/cache/apt/* \
-    && sed -i 's/"$HERE\/chrome"/"$HERE\/chrome" --no-sandbox/g' /opt/google/chrome/google-chrome
+RUN apt-get update -qqy \
+	&& apt-get -qqy install gpg unzip \
+	&& wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
+	&& echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list \
+	&& apt-get update -qqy \
+	&& apt-get -qqy install google-chrome-stable=$CHROME_VERSION \
+	&& rm /etc/apt/sources.list.d/google-chrome.list \
+	&& rm -rf /var/lib/apt/lists/* /var/cache/apt/* \
+	&& sed -i 's/"$HERE\/chrome"/"$HERE\/chrome" --no-sandbox/g' /opt/google/chrome/google-chrome
 
-# Install matching ChromeDriver
+# ChromeDriver
+
 ARG CHROME_DRIVER_VERSION=138.0.7204.183
-RUN wget -q -O /tmp/chromedriver.zip https://storage.googleapis.com/chrome-for-testing-public/${CHROME_DRIVER_VERSION}/linux64/chromedriver-linux64.zip \
-    && unzip /tmp/chromedriver.zip -d /opt \
-    && rm /tmp/chromedriver.zip \
-    && ln -s /opt/chromedriver-linux64/chromedriver /usr/bin/chromedriver
+RUN wget -q -O /tmp/chromedriver.zip https://storage.googleapis.com/chrome-for-testing-public/$CHROME_DRIVER_VERSION/linux64/chromedriver-linux64.zip \
+	&& unzip /tmp/chromedriver.zip -d /opt \
+	&& rm /tmp/chromedriver.zip \
+	&& ln -s /opt/chromedriver-linux64/chromedriver /usr/bin/chromedriver
 
 # Set working dir
 WORKDIR /usr/src/app
