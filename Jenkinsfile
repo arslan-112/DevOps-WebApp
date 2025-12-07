@@ -105,8 +105,8 @@ EOF
                 subject: "Tests FAILED: ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
                 body: "Tests failed.\nBuild: ${env.BUILD_URL}",
                 to: "ijazarslan372@gmail.com,qasimalik@gmail.com"
-            )
+                )
+            }
         }
     }
-}
 }
