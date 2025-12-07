@@ -30,7 +30,6 @@ EOF
                 '''
             }
         }
-
         stage('Build & Run Containers') {
             environment {
             MONGO_URI = credentials('MONGO_ATLAS_URI')
