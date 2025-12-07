@@ -26,7 +26,6 @@ pipeline {
 VITE_API_BASE_URL=http://${EC2_PUBLIC_IP}:5001/api
 VITE_API_BASE_URL2=http://${EC2_PUBLIC_IP}:5001
 EOF
-
                 
                 '''
             }
